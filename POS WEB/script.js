@@ -62,7 +62,7 @@
   // ───────────────────────── STATE ─────────────────────────
   let activeCategory = MENU[0].category;
   let cart = []; // {id, name, price, qty}
-  let orderNumber = 108;
+  let orderNumber = 1;
   let completedTotal = null;
   let printStatus = null; // null | "printing" | "ok" | "error"
   let lastCash = null;
