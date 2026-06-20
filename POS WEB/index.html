@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Thirteen: Eight — Order Counter</title>
+
+<!--
+  THIRTEEN: EIGHT POS
+  --------------------
+  Three files: index.html, style.css, script.js — keep all three
+  in the same folder.
+
+  PRINTING NOTE:
+  This page calls a local print server at http://localhost:9100/print
+  (see thirteen-eight-print-server/server.js). That server MUST be
+  running on the same PC the thermal printer is plugged into.
+
+  If you deploy this folder to Vercel (https://...) and open it in
+  Chrome, Chrome may BLOCK the call to http://localhost:9100 because
+  it's mixed content (https page calling http endpoint). If printing
+  stops working only after deploying:
+    - Easiest fix: open this file locally (double-click it, or serve
+      it from localhost) instead of the Vercel URL, on the same PC as
+      the printer.
+    - Alternative: in Chrome, click the lock/info icon in the address
+      bar on the Vercel page -> Site settings -> allow "Insecure content".
+-->
+
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="app">
+  <header>
+    <div class="brand">
+      <h1>Thirteen<span class="colon">:</span>Eight</h1>
+      <span class="subtitle">Order Counter</span>
+    </div>
+    <div class="ticket-no" id="ticket-no-display">Ticket No. 0108</div>
+  </header>
+
+  <div class="layout">
+    <main>
+      <nav class="tabs" id="tabs"></nav>
+      <div class="item-grid" id="item-grid"></div>
+    </main>
+
+    <aside>
+      <div class="perforation"></div>
+      <div class="ticket-body">
+        <div class="ticket-label">Current Order</div>
+        <div class="ticket-count" id="item-count">0 items</div>
+
+        <div class="line-items" id="line-items">
+          <div class="empty-ticket">Tap a menu item to start<br />this ticket.</div>
+        </div>
+
+        <div class="totals">
+          <div class="totals-row">
+            <span>Subtotal</span>
+            <span id="subtotal-value">₱0.00</span>
+          </div>
+          <div class="totals-row tax">
+            <span>VAT (12%)</span>
+            <span id="tax-value">₱0.00</span>
+          </div>
+          <div class="totals-grand">
+            <span class="label">Total</span>
+            <span class="value" id="total-value">₱0.00</span>
+          </div>
+
+          <button class="charge-btn" id="charge-btn" disabled>Charge ₱0.00</button>
+
+          <div class="confirmation" id="confirmation" style="display:none;"></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- Cash payment modal -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-label">Amount Due</div>
+    <div class="modal-amount" id="modal-amount">₱0.00</div>
+
+    <label class="field-label" for="cash-given-input">Cash received</label>
+    <input id="cash-given-input" type="number" inputmode="decimal" min="0" step="any" placeholder="0.00" />
+
+    <div class="quick-cash" id="quick-cash"></div>
+
+    <div class="change-row">
+      <span class="label">Change</span>
+      <span class="value" id="change-value">₱0.00</span>
+    </div>
+
+    <div class="modal-actions">
+      <button class="cancel" id="cancel-payment-btn">Cancel</button>
+      <button class="confirm" id="confirm-payment-btn" disabled>Confirm &amp; Print</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
